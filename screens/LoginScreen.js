@@ -20,7 +20,25 @@ const LoginScreen = () => {
   const [password, setPassword] = useState("");
   const navigation = useNavigation();
 
-  const handleLogin = () => {};
+  const handleLogin = () => {
+    const user = {
+      email: email,
+      password: password,
+    };
+
+    axios
+      .post("http://192.168.43.207:8000/login", user)
+      .then((response) => {
+        const token = response.data.token
+        console.log(token)
+        AsyncStorage.setItem("authToken", token);
+        navigation.replace("Main");
+      })
+      .catch((error) => {
+        alert("Login Error", "Invalid Email");
+        console.log(error);
+      });
+  };
 
   return (
     <SafeAreaView
