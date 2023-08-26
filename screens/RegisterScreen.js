@@ -22,14 +22,17 @@ const RegisterScreen = () => {
   const [name, setName] = useState("");
   const navigation = useNavigation();
 
-  const handleRegister = () => {
-
-  }
+  const handleRegister = () => {};
   return (
     <SafeAreaView
-    style={{ flex: 1, backgroundColor: "white", alignItems: "center",marginTop:30  }}
-  >
-     <View>
+      style={{
+        flex: 1,
+        backgroundColor: "white",
+        alignItems: "center",
+        marginTop: 30,
+      }}
+    >
+      <View>
         <Image
           style={{ width: 150, height: 100 }}
           source={{
@@ -38,8 +41,8 @@ const RegisterScreen = () => {
         />
       </View>
       <KeyboardAvoidingView>
-      <View style={{ alignItems: "center" }}>
-      <Text
+        <View style={{ alignItems: "center" }}>
+          <Text
             style={{
               fontSize: 17,
               fontWeight: "bold",
@@ -49,9 +52,9 @@ const RegisterScreen = () => {
           >
             Register to your Account
           </Text>
-      </View>
-      <View style={{ marginTop: 10 }}>
-      <View
+        </View>
+        <View style={{ marginTop: 10 }}>
+          <View
             style={{
               flexDirection: "row",
               alignItems: "center",
@@ -62,7 +65,7 @@ const RegisterScreen = () => {
               marginTop: 10,
             }}
           >
-             <Ionicons
+            <Ionicons
               name="ios-person"
               size={24}
               color="gray"
@@ -109,9 +112,9 @@ const RegisterScreen = () => {
               placeholder="enter your Email"
             />
           </View>
-      </View>
-      <View>
-      <View
+        </View>
+        <View>
+          <View
             style={{
               flexDirection: "row",
               alignItems: "center",
@@ -122,7 +125,7 @@ const RegisterScreen = () => {
               marginTop: 10,
             }}
           >
-             <AntDesign
+            <AntDesign
               name="lock1"
               size={24}
               color="gray"
@@ -141,9 +144,9 @@ const RegisterScreen = () => {
               placeholder="enter your Password"
             />
           </View>
-      </View>
-      <View style={{ marginTop: 80 }} />
-      <Pressable
+        </View>
+        <View style={{ marginTop: 80 }} />
+        <Pressable
           onPress={handleRegister}
           style={{
             width: 200,
@@ -174,10 +177,10 @@ const RegisterScreen = () => {
           </Text>
         </Pressable>
       </KeyboardAvoidingView>
-  </SafeAreaView>
-  )
-}
+    </SafeAreaView>
+  );
+};
 
-export default RegisterScreen
+export default RegisterScreen;
 
-const styles = StyleSheet.create({})
+const styles = StyleSheet.create({});
