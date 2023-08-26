@@ -22,7 +22,31 @@ const RegisterScreen = () => {
   const [name, setName] = useState("");
   const navigation = useNavigation();
 
-  const handleRegister = () => {};
+  const handleRegister = () => {
+    const user = {
+      name: name,
+      email: email,
+      password: password,
+    };
+    axios
+      .post("http://192.168.43.207:8000/register", user)
+      .then((response) => {
+        Alert.alert(
+          "Registration successful",
+          "You have been registered Successfully"
+        );
+        setName("");
+        setEmail("");
+        setPassword("");
+      })
+      .catch((error) => {
+        Alert.alert(
+          "Registration Error",
+          "An error occurred while registering"
+        );
+        console.log("registration failed", error);
+      });
+  };
   return (
     <SafeAreaView
       style={{
