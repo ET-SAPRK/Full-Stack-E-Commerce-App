@@ -16,6 +16,7 @@ export default function App() {
         </UserContext>
       </Provider> */}
       <StackNavigator />
+      <StatusBar backgroundColor="#00CED1" />
     </>
   );
 }
