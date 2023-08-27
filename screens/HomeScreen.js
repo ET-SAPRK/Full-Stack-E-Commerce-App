@@ -72,8 +72,8 @@ const HomeScreen = () => {
     },
   ];
   const images = [
-    "https://img.etimg.com/thumb/msid-93051525,width-1070,height-580,imgsize-2243475,overlay-economictimes/photo.jpg",
     "https://images-eu.ssl-images-amazon.com/images/G/31/img22/Wireless/devjyoti/PD23/Launches/Updated_ingress1242x550_3.gif",
+    "https://img.etimg.com/thumb/msid-93051525,width-1070,height-580,imgsize-2243475,overlay-economictimes/photo.jpg",
     "https://images-eu.ssl-images-amazon.com/images/G/31/img23/Books/BB/JULY/1242x550_Header-BB-Jul23.jpg",
   ];
   const deals = [
@@ -265,14 +265,76 @@ const HomeScreen = () => {
           </Pressable>
           <ScrollView horizontal showsHorizontalScrollIndicator={false}>
             {list.map((item, index) => (
-              <Pressable>
+              <Pressable
+                key={index}
+                style={{
+                  margin: 10,
+                  justifyContent: "center",
+                  alignItems: "center",
+                }}
+              >
                 <Image
                   style={{ width: 50, height: 50, resizeMode: "contain" }}
                   source={{ uri: item.image }}
                 />
+                <Text
+                  style={{
+                    textAlign: "center",
+                    fontSize: 12,
+                    fontWeight: "500",
+                    marginTop: 5,
+                  }}
+                >
+                  {item.name}
+                </Text>
               </Pressable>
             ))}
           </ScrollView>
+          <SliderBox
+            images={images}
+            autoPlay
+            circleLoop
+            dotColor={"#13274F"}
+            inactiveDotColor="#90A4AE"
+            ImageComponentStyle={{ width: "100%" }}
+          />
+          <Text style={{ padding: 10, fontSize: 18, fontWeight: "bold" }}>
+            Trending Deals of the week
+          </Text>
+          <View
+            style={{
+              flexDirection: "row",
+              alignItems: "center",
+              flexWrap: "wrap",
+            }}
+          >
+            {deals.map((item, index) => (
+              <Pressable
+                onPress={() =>
+                  navigation.navigate("Info", {
+                    id: item.id,
+                    title: item.title,
+                    price: item?.price,
+                    carouselImages: item.carouselImages,
+                    color: item?.color,
+                    size: item?.size,
+                    oldPrice: item?.oldPrice,
+                    item: item,
+                  })
+                }
+                style={{
+                  marginVertical: 10,
+                  flexDirection: "row",
+                  alignItems: "center",
+                }}
+              >
+                <Image
+                  style={{ width: 180, height: 180, resizeMode: "contain" }}
+                  source={{ uri: item?.image }}
+                />
+              </Pressable>
+            ))}
+          </View>
         </ScrollView>
       </SafeAreaView>
     </>
