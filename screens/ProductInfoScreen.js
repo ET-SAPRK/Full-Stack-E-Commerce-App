@@ -22,6 +22,17 @@ const ProductInfoScreen = () => {
   const navigation = useNavigation();
   const [addedToCart, setAddedToCart] = useState(false);
   const height = (width * 100) / 100;
+  const dispatch = useDispatch();
+
+  const addItemToCart = (item) => {
+    setAddedToCart(true);
+    dispatch(addToCart(item));
+    setTimeout(() => {
+      setAddedToCart(false);
+    }, 60000);
+  };
+  const cart = useSelector((state) => state.cart.cart);
+  console.log(cart);
   return (
     <ScrollView
       style={{ marginTop: 20, flex: 1, backgroundColor: "white" }}
@@ -178,7 +189,7 @@ const ProductInfoScreen = () => {
         IN Stock
       </Text>
       <Pressable
-        onPress={() => {}}
+        onPress={() => addItemToCart(route?.params?.item)}
         style={{
           backgroundColor: "#FFC72C",
           padding: 10,
@@ -189,7 +200,13 @@ const ProductInfoScreen = () => {
           marginVertical: 10,
         }}
       >
-        <Text>Add to Cart</Text>
+        {addedToCart ? (
+          <View>
+            <Text>Added to Cart</Text>
+          </View>
+        ) : (
+          <Text>Add to Cart</Text>
+        )}
       </Pressable>
       <Pressable
         style={{

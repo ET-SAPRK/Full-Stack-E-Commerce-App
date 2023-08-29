@@ -9,14 +9,13 @@ import { UserContext } from "./UserContext";
 export default function App() {
   return (
     <>
-      {/* <Provider store={store}>
+      <Provider store={store}>
         <UserContext>
           <StackNavigator />
-          <ModalPortal />
+          <StatusBar backgroundColor="#00CED1" />
+          {/* <ModalPortal /> */}
         </UserContext>
-      </Provider> */}
-      <StackNavigator />
-      <StatusBar backgroundColor="#00CED1" />
+      </Provider>
     </>
   );
 }
