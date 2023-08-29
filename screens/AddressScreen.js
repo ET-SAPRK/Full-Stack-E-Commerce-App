@@ -23,6 +23,15 @@ const AddressScreen = () => {
   const [postalCode, setPostalCode] = useState("");
   const { userId, setUserId } = useContext(UserType);
 
+  useEffect(() => {
+    const fetchUser = async () => {
+      const token = await AsyncStorage.getItem("authToken");
+      const decodedToken = jwt_decode(token);
+      const userId = decodedToken.userId;
+      setUserId(userId);
+    };
+    fetchUser();
+  }, []);
   const handleAddAddress = () => {
     const address = {
       name,
