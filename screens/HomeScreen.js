@@ -19,7 +19,7 @@ import { SliderBox } from "react-native-image-slider-box";
 import axios from "axios";
 import ProductItem from "../components/ProductItem";
 import DropDownPicker from "react-native-dropdown-picker";
-import { useNavigation } from "@react-navigation/native";
+import { useFocusEffect, useNavigation } from "@react-navigation/native";
 import { useSelector } from "react-redux";
 import { BottomModal, SlideAnimation, ModalContent } from "react-native-modals";
 import AsyncStorage from "@react-native-async-storage/async-storage";
@@ -216,18 +216,34 @@ const HomeScreen = () => {
     },
   ];
 
+  const { userId, setUserId } = useContext(UserType);
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await axios.get("https://fakestoreapi.com/products");
-        setProducts(response.data);
-      } catch (error) {
-        console.log("error message", error);
-      }
+    const fetchUser = async () => {
+      const token = await AsyncStorage.getItem("authToken");
+      const decodedToken = jwt_decode(token);
+      const userId = decodedToken.userId;
+      setUserId(userId);
     };
-
-    fetchData();
+    fetchUser();
+    fetchAddresses();
   }, []);
+  const fetchAddresses = async () => {
+    try {
+      const response = await axios.get(
+        `http://192.168.43.207:8000/addresses/${userId}`
+      );
+      const { addresses } = response.data;
+      setAddresses(addresses);
+    } catch (error) {
+      console.log("error", error);
+    }
+  };
+  //refresh the addresses when the component comes to the focus ie basically when we navigate back
+  useFocusEffect(
+    useCallback(() => {
+      fetchAddresses();
+    }, [])
+  );
   return (
     <>
       <SafeAreaView
@@ -498,36 +514,54 @@ const HomeScreen = () => {
             </Text>
           </View>
           <ScrollView horizontal showsHorizontalScrollIndicator={false}>
-            {/* {addresses?.map((item, index) => ( */}
-            <Pressable
-              onPress={() => {
-                setModalVisible(false);
-                navigation.navigate("Address");
-              }}
-              style={{
-                width: 140,
-                height: 140,
-                borderColor: "#D0D0D0",
-                borderWidth: 1,
-                padding: 10,
-                justifyContent: "center",
-                alignItems: "center",
-                gap: 3,
-                marginRight: 15,
-                marginTop: 10,
-                backgroundColor: "#FBCEB1",
-              }}
-            >
-              <View
-                style={{ flexDirection: "row", alignItems: "center", gap: 3 }}
+            {addresses?.map((item, index) => (
+              <Pressable
+                onPress={() => {
+                  setModalVisible(false);
+                  navigation.navigate("Address");
+                }}
+                style={{
+                  width: 140,
+                  height: 140,
+                  borderColor: "#D0D0D0",
+                  borderWidth: 1,
+                  padding: 10,
+                  justifyContent: "center",
+                  alignItems: "center",
+                  gap: 3,
+                  marginRight: 15,
+                  marginTop: 10,
+                  backgroundColor: "#FBCEB1",
+                }}
               >
-                <Text style={{ fontSize: 13, fontWeight: "bold" }}>
-                  Add address
+                <View
+                  style={{ flexDirection: "row", alignItems: "center", gap: 3 }}
+                >
+                  <Text style={{ fontSize: 13, fontWeight: "bold" }}>
+                    {item?.name}
+                  </Text>
+                  <Entypo name="location-pin" size={24} color="red" />
+                </View>
+                <Text
+                  numberOfLines={1}
+                  style={{ width: 130, fontSize: 13, textAlign: "center" }}
+                >
+                  {item?.houseNo},{item?.landmark}
                 </Text>
-                <Entypo name="location-pin" size={24} color="red" />
-              </View>
-            </Pressable>
-            {/* ))} */}
+                <Text
+                  numberOfLines={1}
+                  style={{ width: 130, fontSize: 13, textAlign: "center" }}
+                >
+                  {item?.street}
+                </Text>
+                <Text
+                  numberOfLines={1}
+                  style={{ width: 130, fontSize: 13, textAlign: "center" }}
+                >
+                  India, Assela
+                </Text>
+              </Pressable>
+            ))}
           </ScrollView>
           <View style={{ flexDirection: "column", gap: 7, marginBottom: 30 }}>
             <View
