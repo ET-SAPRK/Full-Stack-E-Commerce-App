@@ -297,9 +297,15 @@ const HomeScreen = () => {
           >
             <Ionicons name="location-outline" size={24} color="black" />
             <Pressable>
-              <Text style={{ fontSize: 13, fontWeight: "500" }}>
-                Deliver to Sam
-              </Text>
+              {selectedAddress ? (
+                <Text>
+                  Deliver to {selectedAddress?.name} - {selectedAddress?.street}
+                </Text>
+              ) : (
+                <Text style={{ fontSize: 13, fontWeight: "500" }}>
+                  Add a Address
+                </Text>
+              )}
             </Pressable>
             <MaterialIcons name="keyboard-arrow-down" size={24} color="black" />
           </Pressable>
@@ -518,7 +524,7 @@ const HomeScreen = () => {
               <Pressable
                 onPress={() => {
                   setModalVisible(false);
-                  navigation.navigate("Address");
+                  setSelectedAdress(item);
                 }}
                 style={{
                   width: 140,
@@ -562,6 +568,32 @@ const HomeScreen = () => {
                 </Text>
               </Pressable>
             ))}
+            <Pressable
+              onPress={() => {
+                setModalVisible(false);
+                navigation.navigate("Address");
+              }}
+              style={{
+                width: 140,
+                height: 140,
+                borderColor: "#D0D0D0",
+                marginTop: 10,
+                borderWidth: 1,
+                padding: 10,
+                justifyContent: "center",
+                alignItems: "center",
+              }}
+            >
+              <Text
+                style={{
+                  textAlign: "center",
+                  color: "#0066b2",
+                  fontWeight: "500",
+                }}
+              >
+                Add an Address or pick-up point
+              </Text>
+            </Pressable>
           </ScrollView>
           <View style={{ flexDirection: "column", gap: 7, marginBottom: 30 }}>
             <View
