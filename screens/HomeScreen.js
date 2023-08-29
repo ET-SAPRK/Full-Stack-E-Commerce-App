@@ -216,6 +216,19 @@ const HomeScreen = () => {
     },
   ];
 
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await axios.get("https://fakestoreapi.com/products");
+        setProducts(response.data);
+      } catch (error) {
+        console.log("error message", error);
+      }
+    };
+
+    fetchData();
+  }, []);
+
   const { userId, setUserId } = useContext(UserType);
   useEffect(() => {
     const fetchUser = async () => {
@@ -227,6 +240,7 @@ const HomeScreen = () => {
     fetchUser();
     fetchAddresses();
   }, []);
+
   const fetchAddresses = async () => {
     try {
       const response = await axios.get(
@@ -479,7 +493,6 @@ const HomeScreen = () => {
               zIndexInverse={1000}
             />
           </View>
-
           <View
             style={{
               flexDirection: "row",
@@ -564,7 +577,7 @@ const HomeScreen = () => {
                   numberOfLines={1}
                   style={{ width: 130, fontSize: 13, textAlign: "center" }}
                 >
-                  India, Assela
+                  Ethiopia, Assela
                 </Text>
               </Pressable>
             ))}
