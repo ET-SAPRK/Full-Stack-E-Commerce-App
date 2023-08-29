@@ -13,7 +13,7 @@ export default function App() {
         <UserContext>
           <StackNavigator />
           <StatusBar backgroundColor="#00CED1" />
-          {/* <ModalPortal /> */}
+          <ModalPortal />
         </UserContext>
       </Provider>
     </>

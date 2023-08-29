@@ -5,6 +5,14 @@ import { addToCart } from "../redux/CartReducer";
 
 const ProductItem = ({ item }) => {
   const [addedToCart, setAddedToCart] = useState(false);
+  const dispatch = useDispatch();
+  const addItemToCart = (item) => {
+    setAddedToCart(true);
+    dispatch(addToCart(item));
+    setTimeout(() => {
+      setAddedToCart(false);
+    }, 60000);
+  };
   return (
     <Pressable style={{ marginHorizontal: 20, marginVertical: 25 }}>
       <Image
@@ -31,7 +39,7 @@ const ProductItem = ({ item }) => {
       </View>
 
       <Pressable
-        onPress={() => {}}
+        onPress={() => addItemToCart(item)}
         style={{
           backgroundColor: "#FFC72C",
           padding: 10,
