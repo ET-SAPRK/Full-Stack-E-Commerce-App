@@ -203,3 +203,35 @@ app.post("/orders", async (req, res) => {
     res.status(500).json({ message: "Error creating orders" });
   }
 });
+
+app.get("/profile/:userId", async (req, res) => {
+  try {
+    const userId = req.params.userId;
+
+    const user = await User.findById(userId);
+
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    res.status(200).json({ user });
+  } catch (error) {
+    res.status(500).json({ message: "Error retrieving the user profile" });
+  }
+});
+
+app.get("/orders/:userId", async (req, res) => {
+  try {
+    const userId = req.params.userId;
+
+    const orders = await Order.find({ user: userId }).populate("user");
+
+    if (!orders || orders.length === 0) {
+      return res.status(404).json({ message: "No orders found for this user" });
+    }
+
+    res.status(200).json({ orders });
+  } catch (error) {
+    res.status(500).json({ message: "Error" });
+  }
+});
